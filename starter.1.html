@@ -232,8 +232,8 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="#">Link in level 1_1</a></li>
-							<li><a href="#">Link in level 1_2</a></li>
+							<li><a  data-pngid = "1" data-actid="100" href="#" class="submenu bandeja">Link in level 1_1</a></li>
+							<li><a  data-pngid = "2" data-actid="200" href="#" class="submenu bandeja" >Link in level 1_2</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
@@ -243,8 +243,8 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="#">Link in level 2_1</a></li>
-							<li><a href="#">Link in level 2_2</a></li>
+							<li><a data-pngid = "3" data-actid="300" href="#" class="submenu bandeja" >Link in level 2_1</a></li>
+							<li><a data-pngid = "4" data-actid="400" href="#" class="submenu bandeja" >Link in level 2_2</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
@@ -254,7 +254,7 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="#">Link in level 3_1</a></li>
+							<li><a data-pngid = "5" data-actid="500" href="#" class="submenu bandeja" >Link in level 3_1</a></li>
 							<li class="treeview">
 									<a href="#" class="treeview-perfil"><i class="fa fa-link"></i> <span>Multilevel 3_1</span>
 										<span class="pull-right-container">
@@ -262,8 +262,8 @@
 										</span>
 									</a>
 									<ul class="treeview-menu">
-										<li><a href="#">Link in level 3_1_1</a></li>
-										<li><a href="#">Link in level 3_1_2</a></li>
+										<li><a data-pngid = "6" data-actid="600"  href="#" class="submenu bandeja" >Link in level 3_1_1</a></li>
+										<li><a data-pngid = "7" data-actid="700"  href="#" class="submenu bandeja" >Link in level 3_1_2</a></li>
 									</ul>
 								</li>
 						</ul>
@@ -398,9 +398,58 @@
 		$(function () {
 			$('.treeview-perfil').on('click', function(e){
 				var $this = this;
-				var elementos = $this.nextElementSibling.children;
-				alert('dfsldkfnsdl');
+				if (!$($this.parentElement).hasClass("menu-open")){
+					var elementos = $this.nextElementSibling.children;
+					IterarElementos(elementos);
+				}
+					
+					
+
 			})
+
+			function GetCount(elem){
+				var pngid = elem.getAttribute("data-pngid");
+				var actid = elem.getAttribute("data-actid");
+				console.log("pngid = "+pngid);
+				console.log("actid = "+actid);
+
+			}
+
+			function IterarElementos(elementos){
+				$(elementos).each( function( index, element ){
+
+					var $elem = this;
+					if (!$($elem).hasClass("treeview")){
+						GetCount($elem.children[0]);
+					}
+					else{
+						var $hijos = $elem.children[1].children;
+						if ($hijos)
+							IterarElementos($hijos);
+					}
+					
+
+					//var url = '@Url.Action("GetPendientesDePerfil", "Pendientes")' + '?perfil=' + this.id;
+					//var $elem = "#" + this.id + "-tab";
+					//var $icono = "#" + this.id + "-icono";
+					//var $badge = "#" + this.id + "-badge";
+					//var $perfilCantidad = "#" + this.id + "-cant";
+					/* $.ajax({
+						type: "GET",
+						cache: false,
+						url: url,
+						success: successFunc
+					});
+
+					function successFunc(data, status) {
+						$($elem).html(data);
+						var cant = $($perfilCantidad).val();
+						$($badge).html(cant);
+						$($badge).removeClass("bg-orange");
+						$($badge).addClass("bg-blue");
+					} */
+				})
+			}
 
 
 		});
